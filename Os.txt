@@ -1,0 +1,867 @@
+											OPERATING SYSTEMS LABORATORY
+											
+											
+											OS FROM SCRATCH PROJECT
+												K.Akshaya    -2021115011
+												C.Ezhil Oviya-2021115034
+
+
+
+
+
+
+akshaya@akshaya-pc:~$ cd bare_bones
+akshaya@akshaya-pc:~/bare_bones$ i686-elf-as boot.s -o boot.o
+i686-elf-as: command not found
+akshaya@akshaya-pc:~/bare_bones$ 
+akshaya@akshaya-pc:~/bare_bones$ nasm -felf32 boot.asm -o boot.o
+akshaya@akshaya-pc:~/bare_bones$ nasm -felf32 kernel.asm -o kernel.o
+akshaya@akshaya-pc:~/bare_bones$ brew install i686-elf-gcc~
+Command 'brew' not found, did you mean:
+  command 'qbrew' from deb qbrew (0.4.1-8build1)
+  command 'brec' from deb bplay (0.991-10build1)
+Try: sudo apt install <deb name>
+akshaya@akshaya-pc:~/bare_bones$ sudo apt update
+[sudo] password for akshaya: 
+Get:1 https://dl.google.com/linux/chrome/deb stable InRelease [1,825 B]
+Hit:2 http://in.archive.ubuntu.com/ubuntu jammy InRelease                      
+Get:3 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]      
+Get:4 https://dl.google.com/linux/chrome/deb stable/main amd64 Packages [1,080 B]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]     
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [394 kB]
+Get:7 http://in.archive.ubuntu.com/ubuntu jammy-backports InRelease [108 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages [216 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [113 kB]
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/main amd64 DEP-11 Metadata [41.6 kB]
+Get:11 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [9,884 B]
+Get:12 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [260 kB]
+Get:13 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [38.3 kB]
+Get:14 http://security.ubuntu.com/ubuntu jammy-security/universe i386 Packages [529 kB]
+Get:15 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [727 kB]
+Get:16 http://in.archive.ubuntu.com/ubuntu jammy-updates/main i386 Packages [397 kB]
+Get:17 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [127 kB]
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 DEP-11 Metadata [18.6 kB]
+Get:19 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [14.6 kB]
+Get:20 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [609 kB]
+Get:21 http://in.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [172 kB]
+Get:22 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 DEP-11 Metadata [101 kB]
+Get:23 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [14.5 kB]
+Get:24 http://in.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [260 kB]
+Get:25 http://in.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [38.7 kB]
+Get:26 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe i386 Packages [612 kB]
+Get:27 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [906 kB]
+Get:28 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [186 kB]
+Get:29 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 DEP-11 Metadata [269 kB]
+Get:30 http://in.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [18.9 kB]
+Get:31 http://in.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 DEP-11 Metadata [940 B]
+Get:32 http://in.archive.ubuntu.com/ubuntu jammy-backports/main amd64 DEP-11 Metadata [7,980 B]
+Get:33 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [23.3 kB]
+Get:34 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe i386 Packages [13.9 kB]
+Get:35 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 DEP-11 Metadata [16.8 kB]
+Get:36 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe DEP-11 64x64 Icons [22.2 kB]
+Get:37 http://in.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [548 B]
+Fetched 6,496 kB in 33s (196 kB/s)                                             
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+191 packages can be upgraded. Run 'apt list --upgradable' to see them.
+akshaya@akshaya-pc:~/bare_bones$ sudo apt-get install build-essential
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+build-essential is already the newest version (12.9ubuntu3).
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 191 not upgraded.
+akshaya@akshaya-pc:~/bare_bones$ sudo apt install git -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+git is already the newest version (1:2.34.1-1ubuntu1.9).
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 191 not upgraded.
+akshaya@akshaya-pc:~/bare_bones$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+Command 'curl' not found, but can be installed with:
+sudo snap install curl  # version 8.0.1, or
+sudo apt  install curl  # version 7.81.0-1ubuntu1.10
+See 'snap info curl' for additional versions.
+akshaya@akshaya-pc:~/bare_bones$ sudo apt  install curl
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2
+Use 'sudo apt autoremove' to remove them.
+The following NEW packages will be installed:
+  curl
+0 upgraded, 1 newly installed, 0 to remove and 191 not upgraded.
+Need to get 194 kB of archives.
+After this operation, 454 kB of additional disk space will be used.
+Get:1 http://in.archive.ubuntu.com/ubuntu jammy-updates/main amd64 curl amd64 7.81.0-1ubuntu1.10 [194 kB]
+Fetched 194 kB in 2s (91.8 kB/s)
+Selecting previously unselected package curl.
+(Reading database ... 220500 files and directories currently installed.)
+Preparing to unpack .../curl_7.81.0-1ubuntu1.10_amd64.deb ...
+Unpacking curl (7.81.0-1ubuntu1.10) ...
+Setting up curl (7.81.0-1ubuntu1.10) ...
+Processing triggers for man-db (2.10.2-1) ...
+akshaya@akshaya-pc:~/bare_bones$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+==> Checking for `sudo` access (which may request your password)...
+==> This script will install:
+/home/linuxbrew/.linuxbrew/bin/brew
+/home/linuxbrew/.linuxbrew/share/doc/homebrew
+/home/linuxbrew/.linuxbrew/share/man/man1/brew.1
+/home/linuxbrew/.linuxbrew/share/zsh/site-functions/_brew
+/home/linuxbrew/.linuxbrew/etc/bash_completion.d/brew
+/home/linuxbrew/.linuxbrew/Homebrew
+==> The following new directories will be created:
+/home/linuxbrew/.linuxbrew/bin
+/home/linuxbrew/.linuxbrew/etc
+/home/linuxbrew/.linuxbrew/include
+/home/linuxbrew/.linuxbrew/lib
+/home/linuxbrew/.linuxbrew/sbin
+/home/linuxbrew/.linuxbrew/share
+/home/linuxbrew/.linuxbrew/var
+/home/linuxbrew/.linuxbrew/opt
+/home/linuxbrew/.linuxbrew/share/zsh
+/home/linuxbrew/.linuxbrew/share/zsh/site-functions
+/home/linuxbrew/.linuxbrew/var/homebrew
+/home/linuxbrew/.linuxbrew/var/homebrew/linked
+/home/linuxbrew/.linuxbrew/Cellar
+/home/linuxbrew/.linuxbrew/Caskroom
+/home/linuxbrew/.linuxbrew/Frameworks
+
+Press RETURN/ENTER to continue or any other key to abort:
+==> /usr/bin/sudo /usr/bin/install -d -o akshaya -g akshaya -m 0755 /home/linuxbrew/.linuxbrew
+==> /usr/bin/sudo /bin/mkdir -p /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/etc /home/linuxbrew/.linuxbrew/include /home/linuxbrew/.linuxbrew/lib /home/linuxbrew/.linuxbrew/sbin /home/linuxbrew/.linuxbrew/share /home/linuxbrew/.linuxbrew/var /home/linuxbrew/.linuxbrew/opt /home/linuxbrew/.linuxbrew/share/zsh /home/linuxbrew/.linuxbrew/share/zsh/site-functions /home/linuxbrew/.linuxbrew/var/homebrew /home/linuxbrew/.linuxbrew/var/homebrew/linked /home/linuxbrew/.linuxbrew/Cellar /home/linuxbrew/.linuxbrew/Caskroom /home/linuxbrew/.linuxbrew/Frameworks
+==> /usr/bin/sudo /bin/chmod ug=rwx /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/etc /home/linuxbrew/.linuxbrew/include /home/linuxbrew/.linuxbrew/lib /home/linuxbrew/.linuxbrew/sbin /home/linuxbrew/.linuxbrew/share /home/linuxbrew/.linuxbrew/var /home/linuxbrew/.linuxbrew/opt /home/linuxbrew/.linuxbrew/share/zsh /home/linuxbrew/.linuxbrew/share/zsh/site-functions /home/linuxbrew/.linuxbrew/var/homebrew /home/linuxbrew/.linuxbrew/var/homebrew/linked /home/linuxbrew/.linuxbrew/Cellar /home/linuxbrew/.linuxbrew/Caskroom /home/linuxbrew/.linuxbrew/Frameworks
+==> /usr/bin/sudo /bin/chmod go-w /home/linuxbrew/.linuxbrew/share/zsh /home/linuxbrew/.linuxbrew/share/zsh/site-functions
+==> /usr/bin/sudo /bin/chown akshaya /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/etc /home/linuxbrew/.linuxbrew/include /home/linuxbrew/.linuxbrew/lib /home/linuxbrew/.linuxbrew/sbin /home/linuxbrew/.linuxbrew/share /home/linuxbrew/.linuxbrew/var /home/linuxbrew/.linuxbrew/opt /home/linuxbrew/.linuxbrew/share/zsh /home/linuxbrew/.linuxbrew/share/zsh/site-functions /home/linuxbrew/.linuxbrew/var/homebrew /home/linuxbrew/.linuxbrew/var/homebrew/linked /home/linuxbrew/.linuxbrew/Cellar /home/linuxbrew/.linuxbrew/Caskroom /home/linuxbrew/.linuxbrew/Frameworks
+==> /usr/bin/sudo /bin/chgrp akshaya /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/etc /home/linuxbrew/.linuxbrew/include /home/linuxbrew/.linuxbrew/lib /home/linuxbrew/.linuxbrew/sbin /home/linuxbrew/.linuxbrew/share /home/linuxbrew/.linuxbrew/var /home/linuxbrew/.linuxbrew/opt /home/linuxbrew/.linuxbrew/share/zsh /home/linuxbrew/.linuxbrew/share/zsh/site-functions /home/linuxbrew/.linuxbrew/var/homebrew /home/linuxbrew/.linuxbrew/var/homebrew/linked /home/linuxbrew/.linuxbrew/Cellar /home/linuxbrew/.linuxbrew/Caskroom /home/linuxbrew/.linuxbrew/Frameworks
+==> /usr/bin/sudo /bin/mkdir -p /home/linuxbrew/.linuxbrew/Homebrew
+==> /usr/bin/sudo /bin/chown -R akshaya:akshaya /home/linuxbrew/.linuxbrew/Homebrew
+==> Downloading and installing Homebrew...
+remote: Enumerating objects: 241878, done.
+remote: Counting objects: 100% (1294/1294), done.
+remote: Compressing objects: 100% (666/666), done.
+remote: Total 241878 (delta 693), reused 1157 (delta 605), pack-reused 240584
+Receiving objects: 100% (241878/241878), 70.24 MiB | 2.79 MiB/s, done.
+Resolving deltas: 100% (177050/177050), done.
+From https://github.com/Homebrew/brew
+ * [new branch]          master     -> origin/master
+ * [new tag]             0.1        -> 0.1
+ * [new tag]             0.2        -> 0.2
+ * [new tag]             0.3        -> 0.3
+ * [new tag]             0.4        -> 0.4
+ * [new tag]             0.5        -> 0.5
+ * [new tag]             0.6        -> 0.6
+ * [new tag]             0.7        -> 0.7
+ * [new tag]             0.7.1      -> 0.7.1
+ * [new tag]             0.8        -> 0.8
+ * [new tag]             0.8.1      -> 0.8.1
+ * [new tag]             0.9        -> 0.9
+ * [new tag]             0.9.1      -> 0.9.1
+ * [new tag]             0.9.2      -> 0.9.2
+ * [new tag]             0.9.3      -> 0.9.3
+ * [new tag]             0.9.4      -> 0.9.4
+ * [new tag]             0.9.5      -> 0.9.5
+ * [new tag]             0.9.8      -> 0.9.8
+ * [new tag]             0.9.9      -> 0.9.9
+ * [new tag]             1.0.0      -> 1.0.0
+ * [new tag]             1.0.1      -> 1.0.1
+ * [new tag]             1.0.2      -> 1.0.2
+ * [new tag]             1.0.3      -> 1.0.3
+ * [new tag]             1.0.4      -> 1.0.4
+ * [new tag]             1.0.5      -> 1.0.5
+ * [new tag]             1.0.6      -> 1.0.6
+ * [new tag]             1.0.7      -> 1.0.7
+ * [new tag]             1.0.8      -> 1.0.8
+ * [new tag]             1.0.9      -> 1.0.9
+ * [new tag]             1.1.0      -> 1.1.0
+ * [new tag]             1.1.1      -> 1.1.1
+ * [new tag]             1.1.10     -> 1.1.10
+ * [new tag]             1.1.11     -> 1.1.11
+ * [new tag]             1.1.12     -> 1.1.12
+ * [new tag]             1.1.13     -> 1.1.13
+ * [new tag]             1.1.2      -> 1.1.2
+ * [new tag]             1.1.3      -> 1.1.3
+ * [new tag]             1.1.4      -> 1.1.4
+ * [new tag]             1.1.5      -> 1.1.5
+ * [new tag]             1.1.6      -> 1.1.6
+ * [new tag]             1.1.7      -> 1.1.7
+ * [new tag]             1.1.8      -> 1.1.8
+ * [new tag]             1.1.9      -> 1.1.9
+ * [new tag]             1.2.0      -> 1.2.0
+ * [new tag]             1.2.1      -> 1.2.1
+ * [new tag]             1.2.2      -> 1.2.2
+ * [new tag]             1.2.3      -> 1.2.3
+ * [new tag]             1.2.4      -> 1.2.4
+ * [new tag]             1.2.5      -> 1.2.5
+ * [new tag]             1.2.6      -> 1.2.6
+ * [new tag]             1.3.0      -> 1.3.0
+ * [new tag]             1.3.1      -> 1.3.1
+ * [new tag]             1.3.2      -> 1.3.2
+ * [new tag]             1.3.3      -> 1.3.3
+ * [new tag]             1.3.4      -> 1.3.4
+ * [new tag]             1.3.5      -> 1.3.5
+ * [new tag]             1.3.6      -> 1.3.6
+ * [new tag]             1.3.7      -> 1.3.7
+ * [new tag]             1.3.8      -> 1.3.8
+ * [new tag]             1.3.9      -> 1.3.9
+ * [new tag]             1.4.0      -> 1.4.0
+ * [new tag]             1.4.1      -> 1.4.1
+ * [new tag]             1.4.2      -> 1.4.2
+ * [new tag]             1.4.3      -> 1.4.3
+ * [new tag]             1.5.0      -> 1.5.0
+ * [new tag]             1.5.1      -> 1.5.1
+ * [new tag]             1.5.10     -> 1.5.10
+ * [new tag]             1.5.11     -> 1.5.11
+ * [new tag]             1.5.12     -> 1.5.12
+ * [new tag]             1.5.13     -> 1.5.13
+ * [new tag]             1.5.14     -> 1.5.14
+ * [new tag]             1.5.2      -> 1.5.2
+ * [new tag]             1.5.3      -> 1.5.3
+ * [new tag]             1.5.4      -> 1.5.4
+ * [new tag]             1.5.5      -> 1.5.5
+ * [new tag]             1.5.6      -> 1.5.6
+ * [new tag]             1.5.7      -> 1.5.7
+ * [new tag]             1.5.8      -> 1.5.8
+ * [new tag]             1.5.9      -> 1.5.9
+ * [new tag]             1.6.0      -> 1.6.0
+ * [new tag]             1.6.1      -> 1.6.1
+ * [new tag]             1.6.10     -> 1.6.10
+ * [new tag]             1.6.11     -> 1.6.11
+ * [new tag]             1.6.12     -> 1.6.12
+ * [new tag]             1.6.13     -> 1.6.13
+ * [new tag]             1.6.14     -> 1.6.14
+ * [new tag]             1.6.15     -> 1.6.15
+ * [new tag]             1.6.16     -> 1.6.16
+ * [new tag]             1.6.17     -> 1.6.17
+ * [new tag]             1.6.2      -> 1.6.2
+ * [new tag]             1.6.3      -> 1.6.3
+ * [new tag]             1.6.4      -> 1.6.4
+ * [new tag]             1.6.5      -> 1.6.5
+ * [new tag]             1.6.6      -> 1.6.6
+ * [new tag]             1.6.7      -> 1.6.7
+ * [new tag]             1.6.8      -> 1.6.8
+ * [new tag]             1.6.9      -> 1.6.9
+ * [new tag]             1.7.0      -> 1.7.0
+ * [new tag]             1.7.1      -> 1.7.1
+ * [new tag]             1.7.2      -> 1.7.2
+ * [new tag]             1.7.3      -> 1.7.3
+ * [new tag]             1.7.4      -> 1.7.4
+ * [new tag]             1.7.5      -> 1.7.5
+ * [new tag]             1.7.6      -> 1.7.6
+ * [new tag]             1.7.7      -> 1.7.7
+ * [new tag]             1.8.0      -> 1.8.0
+ * [new tag]             1.8.1      -> 1.8.1
+ * [new tag]             1.8.2      -> 1.8.2
+ * [new tag]             1.8.3      -> 1.8.3
+ * [new tag]             1.8.4      -> 1.8.4
+ * [new tag]             1.8.5      -> 1.8.5
+ * [new tag]             1.8.6      -> 1.8.6
+ * [new tag]             1.9.0      -> 1.9.0
+ * [new tag]             1.9.1      -> 1.9.1
+ * [new tag]             1.9.2      -> 1.9.2
+ * [new tag]             1.9.3      -> 1.9.3
+ * [new tag]             2.0.0      -> 2.0.0
+ * [new tag]             2.0.1      -> 2.0.1
+ * [new tag]             2.0.2      -> 2.0.2
+ * [new tag]             2.0.3      -> 2.0.3
+ * [new tag]             2.0.4      -> 2.0.4
+ * [new tag]             2.0.5      -> 2.0.5
+ * [new tag]             2.0.6      -> 2.0.6
+ * [new tag]             2.1.0      -> 2.1.0
+ * [new tag]             2.1.1      -> 2.1.1
+ * [new tag]             2.1.10     -> 2.1.10
+ * [new tag]             2.1.11     -> 2.1.11
+ * [new tag]             2.1.12     -> 2.1.12
+ * [new tag]             2.1.13     -> 2.1.13
+ * [new tag]             2.1.14     -> 2.1.14
+ * [new tag]             2.1.15     -> 2.1.15
+ * [new tag]             2.1.16     -> 2.1.16
+ * [new tag]             2.1.2      -> 2.1.2
+ * [new tag]             2.1.3      -> 2.1.3
+ * [new tag]             2.1.4      -> 2.1.4
+ * [new tag]             2.1.5      -> 2.1.5
+ * [new tag]             2.1.6      -> 2.1.6
+ * [new tag]             2.1.7      -> 2.1.7
+ * [new tag]             2.1.8      -> 2.1.8
+ * [new tag]             2.1.9      -> 2.1.9
+ * [new tag]             2.2.0      -> 2.2.0
+ * [new tag]             2.2.1      -> 2.2.1
+ * [new tag]             2.2.10     -> 2.2.10
+ * [new tag]             2.2.11     -> 2.2.11
+ * [new tag]             2.2.12     -> 2.2.12
+ * [new tag]             2.2.13     -> 2.2.13
+ * [new tag]             2.2.14     -> 2.2.14
+ * [new tag]             2.2.15     -> 2.2.15
+ * [new tag]             2.2.16     -> 2.2.16
+ * [new tag]             2.2.17     -> 2.2.17
+ * [new tag]             2.2.2      -> 2.2.2
+ * [new tag]             2.2.3      -> 2.2.3
+ * [new tag]             2.2.4      -> 2.2.4
+ * [new tag]             2.2.5      -> 2.2.5
+ * [new tag]             2.2.6      -> 2.2.6
+ * [new tag]             2.2.7      -> 2.2.7
+ * [new tag]             2.2.8      -> 2.2.8
+ * [new tag]             2.2.9      -> 2.2.9
+ * [new tag]             2.3.0      -> 2.3.0
+ * [new tag]             2.4.0      -> 2.4.0
+ * [new tag]             2.4.1      -> 2.4.1
+ * [new tag]             2.4.10     -> 2.4.10
+ * [new tag]             2.4.11     -> 2.4.11
+ * [new tag]             2.4.12     -> 2.4.12
+ * [new tag]             2.4.13     -> 2.4.13
+ * [new tag]             2.4.14     -> 2.4.14
+ * [new tag]             2.4.15     -> 2.4.15
+ * [new tag]             2.4.16     -> 2.4.16
+ * [new tag]             2.4.2      -> 2.4.2
+ * [new tag]             2.4.3      -> 2.4.3
+ * [new tag]             2.4.4      -> 2.4.4
+ * [new tag]             2.4.5      -> 2.4.5
+ * [new tag]             2.4.6      -> 2.4.6
+ * [new tag]             2.4.7      -> 2.4.7
+ * [new tag]             2.4.8      -> 2.4.8
+ * [new tag]             2.4.9      -> 2.4.9
+ * [new tag]             2.5.0      -> 2.5.0
+ * [new tag]             2.5.1      -> 2.5.1
+ * [new tag]             2.5.10     -> 2.5.10
+ * [new tag]             2.5.11     -> 2.5.11
+ * [new tag]             2.5.12     -> 2.5.12
+ * [new tag]             2.5.2      -> 2.5.2
+ * [new tag]             2.5.3      -> 2.5.3
+ * [new tag]             2.5.4      -> 2.5.4
+ * [new tag]             2.5.5      -> 2.5.5
+ * [new tag]             2.5.6      -> 2.5.6
+ * [new tag]             2.5.7      -> 2.5.7
+ * [new tag]             2.5.8      -> 2.5.8
+ * [new tag]             2.5.9      -> 2.5.9
+ * [new tag]             2.6.0      -> 2.6.0
+ * [new tag]             2.6.1      -> 2.6.1
+ * [new tag]             2.6.2      -> 2.6.2
+ * [new tag]             2.7.0      -> 2.7.0
+ * [new tag]             2.7.1      -> 2.7.1
+ * [new tag]             2.7.2      -> 2.7.2
+ * [new tag]             2.7.3      -> 2.7.3
+ * [new tag]             2.7.4      -> 2.7.4
+ * [new tag]             2.7.5      -> 2.7.5
+ * [new tag]             2.7.6      -> 2.7.6
+ * [new tag]             2.7.7      -> 2.7.7
+ * [new tag]             3.0.0      -> 3.0.0
+ * [new tag]             3.0.1      -> 3.0.1
+ * [new tag]             3.0.10     -> 3.0.10
+ * [new tag]             3.0.11     -> 3.0.11
+ * [new tag]             3.0.2      -> 3.0.2
+ * [new tag]             3.0.3      -> 3.0.3
+ * [new tag]             3.0.4      -> 3.0.4
+ * [new tag]             3.0.5      -> 3.0.5
+ * [new tag]             3.0.6      -> 3.0.6
+ * [new tag]             3.0.7      -> 3.0.7
+ * [new tag]             3.0.8      -> 3.0.8
+ * [new tag]             3.0.9      -> 3.0.9
+ * [new tag]             3.1.0      -> 3.1.0
+ * [new tag]             3.1.1      -> 3.1.1
+ * [new tag]             3.1.10     -> 3.1.10
+ * [new tag]             3.1.11     -> 3.1.11
+ * [new tag]             3.1.12     -> 3.1.12
+ * [new tag]             3.1.2      -> 3.1.2
+ * [new tag]             3.1.3      -> 3.1.3
+ * [new tag]             3.1.4      -> 3.1.4
+ * [new tag]             3.1.5      -> 3.1.5
+ * [new tag]             3.1.6      -> 3.1.6
+ * [new tag]             3.1.7      -> 3.1.7
+ * [new tag]             3.1.8      -> 3.1.8
+ * [new tag]             3.1.9      -> 3.1.9
+ * [new tag]             3.2.0      -> 3.2.0
+ * [new tag]             3.2.1      -> 3.2.1
+ * [new tag]             3.2.10     -> 3.2.10
+ * [new tag]             3.2.11     -> 3.2.11
+ * [new tag]             3.2.12     -> 3.2.12
+ * [new tag]             3.2.13     -> 3.2.13
+ * [new tag]             3.2.14     -> 3.2.14
+ * [new tag]             3.2.15     -> 3.2.15
+ * [new tag]             3.2.16     -> 3.2.16
+ * [new tag]             3.2.17     -> 3.2.17
+ * [new tag]             3.2.2      -> 3.2.2
+ * [new tag]             3.2.3      -> 3.2.3
+ * [new tag]             3.2.4      -> 3.2.4
+ * [new tag]             3.2.5      -> 3.2.5
+ * [new tag]             3.2.6      -> 3.2.6
+ * [new tag]             3.2.7      -> 3.2.7
+ * [new tag]             3.2.8      -> 3.2.8
+ * [new tag]             3.2.9      -> 3.2.9
+ * [new tag]             3.3.0      -> 3.3.0
+ * [new tag]             3.3.1      -> 3.3.1
+ * [new tag]             3.3.10     -> 3.3.10
+ * [new tag]             3.3.11     -> 3.3.11
+ * [new tag]             3.3.12     -> 3.3.12
+ * [new tag]             3.3.13     -> 3.3.13
+ * [new tag]             3.3.14     -> 3.3.14
+ * [new tag]             3.3.15     -> 3.3.15
+ * [new tag]             3.3.16     -> 3.3.16
+ * [new tag]             3.3.2      -> 3.3.2
+ * [new tag]             3.3.3      -> 3.3.3
+ * [new tag]             3.3.4      -> 3.3.4
+ * [new tag]             3.3.5      -> 3.3.5
+ * [new tag]             3.3.6      -> 3.3.6
+ * [new tag]             3.3.7      -> 3.3.7
+ * [new tag]             3.3.8      -> 3.3.8
+ * [new tag]             3.3.9      -> 3.3.9
+ * [new tag]             3.4.0      -> 3.4.0
+ * [new tag]             3.4.1      -> 3.4.1
+ * [new tag]             3.4.10     -> 3.4.10
+ * [new tag]             3.4.11     -> 3.4.11
+ * [new tag]             3.4.2      -> 3.4.2
+ * [new tag]             3.4.3      -> 3.4.3
+ * [new tag]             3.4.4      -> 3.4.4
+ * [new tag]             3.4.5      -> 3.4.5
+ * [new tag]             3.4.6      -> 3.4.6
+ * [new tag]             3.4.7      -> 3.4.7
+ * [new tag]             3.4.8      -> 3.4.8
+ * [new tag]             3.4.9      -> 3.4.9
+ * [new tag]             3.5.0      -> 3.5.0
+ * [new tag]             3.5.1      -> 3.5.1
+ * [new tag]             3.5.10     -> 3.5.10
+ * [new tag]             3.5.2      -> 3.5.2
+ * [new tag]             3.5.3      -> 3.5.3
+ * [new tag]             3.5.4      -> 3.5.4
+ * [new tag]             3.5.5      -> 3.5.5
+ * [new tag]             3.5.6      -> 3.5.6
+ * [new tag]             3.5.7      -> 3.5.7
+ * [new tag]             3.5.8      -> 3.5.8
+ * [new tag]             3.5.9      -> 3.5.9
+ * [new tag]             3.6.0      -> 3.6.0
+ * [new tag]             3.6.1      -> 3.6.1
+ * [new tag]             3.6.10     -> 3.6.10
+ * [new tag]             3.6.11     -> 3.6.11
+ * [new tag]             3.6.12     -> 3.6.12
+ * [new tag]             3.6.13     -> 3.6.13
+ * [new tag]             3.6.14     -> 3.6.14
+ * [new tag]             3.6.15     -> 3.6.15
+ * [new tag]             3.6.16     -> 3.6.16
+ * [new tag]             3.6.17     -> 3.6.17
+ * [new tag]             3.6.18     -> 3.6.18
+ * [new tag]             3.6.19     -> 3.6.19
+ * [new tag]             3.6.2      -> 3.6.2
+ * [new tag]             3.6.20     -> 3.6.20
+ * [new tag]             3.6.21     -> 3.6.21
+ * [new tag]             3.6.3      -> 3.6.3
+ * [new tag]             3.6.4      -> 3.6.4
+ * [new tag]             3.6.5      -> 3.6.5
+ * [new tag]             3.6.6      -> 3.6.6
+ * [new tag]             3.6.7      -> 3.6.7
+ * [new tag]             3.6.8      -> 3.6.8
+ * [new tag]             3.6.9      -> 3.6.9
+ * [new tag]             4.0.0      -> 4.0.0
+ * [new tag]             4.0.1      -> 4.0.1
+ * [new tag]             4.0.10     -> 4.0.10
+ * [new tag]             4.0.11     -> 4.0.11
+ * [new tag]             4.0.12     -> 4.0.12
+ * [new tag]             4.0.13     -> 4.0.13
+ * [new tag]             4.0.14     -> 4.0.14
+ * [new tag]             4.0.15     -> 4.0.15
+ * [new tag]             4.0.16     -> 4.0.16
+ * [new tag]             4.0.17     -> 4.0.17
+ * [new tag]             4.0.18     -> 4.0.18
+ * [new tag]             4.0.19     -> 4.0.19
+ * [new tag]             4.0.2      -> 4.0.2
+ * [new tag]             4.0.3      -> 4.0.3
+ * [new tag]             4.0.4      -> 4.0.4
+ * [new tag]             4.0.5      -> 4.0.5
+ * [new tag]             4.0.6      -> 4.0.6
+ * [new tag]             4.0.7      -> 4.0.7
+ * [new tag]             4.0.8      -> 4.0.8
+ * [new tag]             4.0.9      -> 4.0.9
+HEAD is now at 8aaf99e1d Merge pull request #15475 from reitermarkus/fetch-wrong-method
+==> Downloading https://ghcr.io/v2/homebrew/portable-ruby/portable-ruby/blobs/sha256:68923daf3e139482b977c3deba63a3b54ea37bb5f716482948878819ef911bad
+######################################################################## 100.0%
+==> Pouring portable-ruby-2.6.10_1.x86_64_linux.bottle.tar.gz
+Warning: /home/linuxbrew/.linuxbrew/bin is not in your PATH.
+  Instructions on how to configure your shell for Homebrew
+  can be found in the 'Next steps' section below.
+==> Installation successful!
+
+==> Homebrew has enabled anonymous aggregate formulae and cask analytics.
+Read the analytics documentation (and how to opt-out) here:
+  https://docs.brew.sh/Analytics
+No analytics data has been sent yet (nor will any be during this install run).
+
+==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+  https://github.com/Homebrew/brew#donations
+
+==> Next steps:
+- Run these two commands in your terminal to add Homebrew to your PATH:
+    (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/akshaya/.profile
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+- Install Homebrew's dependencies if you have sudo access:
+    sudo apt-get install build-essential
+  For more information, see:
+    https://docs.brew.sh/Homebrew-on-Linux
+- We recommend that you install GCC:
+    brew install gcc
+- Run brew help to get started
+- Further documentation:
+    https://docs.brew.sh
+
+akshaya@akshaya-pc:~/bare_bones$ (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/$USER/.bashrc
+akshaya@akshaya-pc:~/bare_bones$ brew install i686-elf-gcc~
+Command 'brew' not found, did you mean:
+  command 'brec' from deb bplay (0.991-10build1)
+  command 'qbrew' from deb qbrew (0.4.1-8build1)
+Try: sudo apt install <deb name>
+akshaya@akshaya-pc:~/bare_bones$ sudo apt install brew
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package brew
+akshaya@akshaya-pc:~/bare_bones$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+akshaya@akshaya-pc:~/bare_bones$ sudo apt install brew
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package brew
+akshaya@akshaya-pc:~/bare_bones$ brew install i686-elf-gcc~
+Warning: No available formula with the name "i686-elf-gcc~". Did you mean i686-elf-gcc?
+==> Searching for similarly named formulae...
+==> Formulae
+i686-elf-gcc
+
+To install i686-elf-gcc, run:
+  brew install i686-elf-gcc
+akshaya@akshaya-pc:~/bare_bones$ brew install i686-elf-gcc
+==> Fetching dependencies for i686-elf-gcc: gmp, i686-elf-binutils, mpfr and libmpc
+==> Fetching gmp
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/manifests/6.2.1_1
+######################################################################### 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/blobs/sha256:786ae29f0c0b06
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sh
+######################################################################### 100.0%
+==> Fetching i686-elf-binutils
+==> Downloading https://ghcr.io/v2/homebrew/core/i686-elf-binutils/manifests/2.4
+######################################################################### 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/i686-elf-binutils/blobs/sha256:
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sh
+######################################################################### 100.0%
+==> Fetching mpfr
+==> Downloading https://ghcr.io/v2/homebrew/core/mpfr/manifests/4.2.0-p9
+######################################################################### 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/mpfr/blobs/sha256:d0cafd93a5957
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sh
+######################################################################### 100.0%
+==> Fetching libmpc
+==> Downloading https://ghcr.io/v2/homebrew/core/libmpc/manifests/1.3.1
+######################################################################### 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/libmpc/blobs/sha256:f6542ae5bcf
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sh
+######################################################################### 100.0%
+==> Fetching i686-elf-gcc
+==> Downloading https://ghcr.io/v2/homebrew/core/i686-elf-gcc/manifests/13.1.0
+######################################################################### 100.0%
+==> Downloading https://ghcr.io/v2/homebrew/core/i686-elf-gcc/blobs/sha256:6946d
+==> Downloading from https://pkg-containers.githubusercontent.com/ghcr1/blobs/sh
+######################################################################### 100.0%
+==> Installing dependencies for i686-elf-gcc: gmp, i686-elf-binutils, mpfr and libmpc
+==> Installing i686-elf-gcc dependency: gmp
+==> Pouring gmp--6.2.1_1.x86_64_linux.bottle.tar.gz
+🍺  /home/linuxbrew/.linuxbrew/Cellar/gmp/6.2.1_1: 23 files, 3.9MB
+==> Installing i686-elf-gcc dependency: i686-elf-binutils
+==> Pouring i686-elf-binutils--2.40.x86_64_linux.bottle.tar.gz
+🍺  /home/linuxbrew/.linuxbrew/Cellar/i686-elf-binutils/2.40: 102 files, 40.3MB
+==> Installing i686-elf-gcc dependency: mpfr
+==> Pouring mpfr--4.2.0-p9.x86_64_linux.bottle.tar.gz
+🍺  /home/linuxbrew/.linuxbrew/Cellar/mpfr/4.2.0-p9: 31 files, 3.9MB
+==> Installing i686-elf-gcc dependency: libmpc
+==> Pouring libmpc--1.3.1.x86_64_linux.bottle.tar.gz
+🍺  /home/linuxbrew/.linuxbrew/Cellar/libmpc/1.3.1: 13 files, 638.3KB
+==> Installing i686-elf-gcc
+==> Pouring i686-elf-gcc--13.1.0.x86_64_linux.bottle.tar.gz
+🍺  /home/linuxbrew/.linuxbrew/Cellar/i686-elf-gcc/13.1.0: 634 files, 176.3MB
+==> Running `brew cleanup i686-elf-gcc`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+akshaya@akshaya-pc:~/bare_bones$ i686-elf-gcc -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+akshaya@akshaya-pc:~/bare_bones$ i686-elf-gcc -T linker.ld -o myos.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
+akshaya@akshaya-pc:~/bare_bones$ grub-file --is-x86-multiboot myos.bin
+akshaya@akshaya-pc:~/bare_bones$ if grub-file --is-x86-multiboot myos.bin; then
+  echo multiboot confirmed
+else
+  echo the file is not multiboot
+fi
+multiboot confirmed
+akshaya@akshaya-pc:~/bare_bones$ menuentry "myos" {
+        multiboot /boot/myos.bin
+}
+menuentry: command not found
+multiboot: command not found
+bash: syntax error near unexpected token `}'
+akshaya@akshaya-pc:~/bare_bones$ mkdir -p isodir/boot/grub
+akshaya@akshaya-pc:~/bare_bones$ cp myos.bin isodir/boot/myos.bin
+akshaya@akshaya-pc:~/bare_bones$ cp grub.cfg isodir/boot/grub/grub.cfg
+akshaya@akshaya-pc:~/bare_bones$ grub-mkrescue -o myos.iso isodir
+grub-mkrescue: error: xorriso not found.
+akshaya@akshaya-pc:~/bare_bones$ sudo apt-get install xorriso
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libburn4 libisoburn1 libisofs6 libjte2
+Suggested packages:
+  xorriso-tcltk jigit cdck
+The following NEW packages will be installed:
+  libburn4 libisoburn1 libisofs6 libjte2 xorriso
+0 upgraded, 5 newly installed, 0 to remove and 191 not upgraded.
+Need to get 1,092 kB of archives.
+After this operation, 2,292 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 libburn4 amd64 1.5.4-1 [162 kB]
+Get:2 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 libjte2 amd64 1.22-3build1 [27.0 kB]
+Get:3 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 libisofs6 amd64 1.5.4-1 [210 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 libisoburn1 amd64 1.5.4-2 [402 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu jammy/universe amd64 xorriso amd64 1.5.4-2 [291 kB]
+Fetched 1,092 kB in 5s (237 kB/s)
+Selecting previously unselected package libburn4:amd64.
+(Reading database ... 220507 files and directories currently installed.)
+Preparing to unpack .../libburn4_1.5.4-1_amd64.deb ...
+Unpacking libburn4:amd64 (1.5.4-1) ...
+Selecting previously unselected package libjte2:amd64.
+Preparing to unpack .../libjte2_1.22-3build1_amd64.deb ...
+Unpacking libjte2:amd64 (1.22-3build1) ...
+Selecting previously unselected package libisofs6:amd64.
+Preparing to unpack .../libisofs6_1.5.4-1_amd64.deb ...
+Unpacking libisofs6:amd64 (1.5.4-1) ...
+Selecting previously unselected package libisoburn1:amd64.
+Preparing to unpack .../libisoburn1_1.5.4-2_amd64.deb ...
+Unpacking libisoburn1:amd64 (1.5.4-2) ...
+Selecting previously unselected package xorriso.
+Preparing to unpack .../xorriso_1.5.4-2_amd64.deb ...
+Unpacking xorriso (1.5.4-2) ...
+Setting up libjte2:amd64 (1.22-3build1) ...
+Setting up libburn4:amd64 (1.5.4-1) ...
+Setting up libisofs6:amd64 (1.5.4-1) ...
+Setting up libisoburn1:amd64 (1.5.4-2) ...
+Setting up xorriso (1.5.4-2) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for install-info (6.8-4build1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
+akshaya@akshaya-pc:~/bare_bones$ grub-mkrescue -o myos.iso isodir
+grub-mkrescue: error: `mformat` invocation failed
+.
+akshaya@akshaya-pc:~/bare_bones$ sudo -i
+root@akshaya-pc:~# fdisk -l
+Disk /dev/loop1: 4 KiB, 4096 bytes, 8 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop2: 63.34 MiB, 66412544 bytes, 129712 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop3: 72.99 MiB, 76537856 bytes, 149488 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop4: 73.11 MiB, 76656640 bytes, 149720 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop5: 241.49 MiB, 253222912 bytes, 494576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop6: 242.02 MiB, 253779968 bytes, 495664 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop7: 349.69 MiB, 366678016 bytes, 716168 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors
+Disk model: TOSHIBA MQ04ABF1
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: EA9ABD1B-71C0-4A1A-9578-4C608A556A61
+
+Device          Start        End   Sectors   Size Type
+/dev/sda1        2048     534527    532480   260M EFI System
+/dev/sda2      534528     567295     32768    16M Microsoft reserved
+/dev/sda3      567296  300470271 299902976   143G Microsoft basic data
+/dev/sda4   300470272  302159871   1689600   825M Windows recovery environment
+/dev/sda5   302161920  852252671 550090752 262.3G Microsoft basic data
+/dev/sda6   852252672 1402343423 550090752 262.3G Microsoft basic data
+/dev/sda7  1402343424 1742718975 340375552 162.3G Microsoft basic data
+/dev/sda8  1952436224 1953511423   1075200   525M Windows recovery environment
+/dev/sda9  1742718976 1932718079 189999104  90.6G Linux filesystem
+/dev/sda10 1932718080 1952436223  19718144   9.4G Linux swap
+
+Partition table entries are not in disk order.
+
+
+Disk /dev/loop8: 349.69 MiB, 366673920 bytes, 716160 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop9: 460.56 MiB, 482930688 bytes, 943224 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop10: 91.69 MiB, 96141312 bytes, 187776 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop11: 45.93 MiB, 48160768 bytes, 94064 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop12: 12.32 MiB, 12922880 bytes, 25240 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop13: 53.24 MiB, 55824384 bytes, 109032 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop14: 53.24 MiB, 55824384 bytes, 109032 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop15: 452 KiB, 462848 bytes, 904 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop16: 460.56 MiB, 482930688 bytes, 943224 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop17: 428 KiB, 438272 bytes, 856 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop18: 63.45 MiB, 66535424 bytes, 129952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+root@akshaya-pc:~# mount /dev/sdaX /mnt
+mount: /mnt: special device /dev/sdaX does not exist.
+root@akshaya-pc:~# grub-install --root-directory=/mnt /dev/sda
+Installing for x86_64-efi platform.
+grub-install: error: cannot find EFI directory.
+root@akshaya-pc:~#  sudo update-grub 
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.19.0-41-generic
+Found initrd image: /boot/initrd.img-5.19.0-41-generic
+Found linux image: /boot/vmlinuz-5.19.0-40-generic
+Found initrd image: /boot/initrd.img-5.19.0-40-generic
+Memtest86+ needs a 16-bit boot, that is not available on EFI, exiting
+Warning: os-prober will be executed to detect other bootable partitions.
+Its output will be used to detect bootable binaries on them and create new boot entries.
+Found Windows Boot Manager on /dev/sda1@/EFI/Microsoft/Boot/bootmgfw.efi
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+root@akshaya-pc:~# su -
+root@akshaya-pc:~# 
+logout
+root@akshaya-pc:~# cd bare_bones
+-bash: cd: bare_bones: No such file or directory
+root@akshaya-pc:~# sudo passwd -dl root
+passwd: password expiry information changed.
+root@akshaya-pc:~# exit
+logout
+akshaya@akshaya-pc:~/bare_bones$ grub-mkrescue -o myos.iso isodir
+grub-mkrescue: error: `mformat` invocation failed
+.
+akshaya@akshaya-pc:~/bare_bones$ ^C
+akshaya@akshaya-pc:~/bare_bones$ sudo apt-get install mtools
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  libflashrom1 libftdi1-2
+Use 'sudo apt autoremove' to remove them.
+Suggested packages:
+  floppyd
+The following NEW packages will be installed:
+  mtools
+0 upgraded, 1 newly installed, 0 to remove and 191 not upgraded.
+Need to get 201 kB of archives.
+After this operation, 413 kB of additional disk space will be used.
+Get:1 http://in.archive.ubuntu.com/ubuntu jammy/main amd64 mtools amd64 4.0.33-1+really4.0.32-1build1 [201 kB]
+Fetched 201 kB in 2s (93.0 kB/s) 
+Selecting previously unselected package mtools.
+(Reading database ... 220558 files and directories currently installed.)
+Preparing to unpack .../mtools_4.0.33-1+really4.0.32-1build1_amd64.deb ...
+Unpacking mtools (4.0.33-1+really4.0.32-1build1) ...
+Setting up mtools (4.0.33-1+really4.0.32-1build1) ...
+Processing triggers for install-info (6.8-4build1) ...
+Processing triggers for man-db (2.10.2-1) ...
+akshaya@akshaya-pc:~/bare_bones$ grub-mkrescue -o myos.iso isodir
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+Drive current: -outdev 'stdio:myos.iso'
+Media current: stdio file, overwriteable
+Media status : is blank
+Media summary: 0 sessions, 0 data blocks, 0 data, 66.5g free
+Added to ISO image: directory '/'='/tmp/grub.aeEQnE'
+xorriso : UPDATE :     587 files added in 1 seconds
+Added to ISO image: directory '/'='/home/akshaya/bare_bones/isodir'
+xorriso : UPDATE :     591 files added in 1 seconds
+xorriso : NOTE : Copying to System Area: 512 bytes from file '/usr/lib/grub/i386-pc/boot_hybrid.img'
+ISO image produced: 5737 sectors
+Written to medium : 5737 sectors at LBA 0
+Writing to 'stdio:myos.iso' completed successfully.
+
+akshaya@akshaya-pc:~/bare_bones$ qemu-system-i386 -cdrom myos.iso
+akshaya@akshaya-pc:~/bare_bones$ qemu-system-i386 -kernel myos.bin
+akshaya@akshaya-pc:~/bare_bones$ sudo dd if=myos.iso of=/dev/sdx && sync
+22948+0 records in
+22948+0 records out
+11749376 bytes (12 MB, 11 MiB) copied, 0.019301 s, 609 MB/s
+akshaya@akshaya-pc:~/bare_bones$
+
+bare bones.text
+Displaying bare bones.text.
