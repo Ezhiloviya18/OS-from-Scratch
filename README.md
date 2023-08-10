@@ -1,6 +1,6 @@
 # Building an Operating System from Scratch
 
-![Operating System](images/operating_system.jpg)
+
 
 Welcome to the "Building an Operating System from Scratch" project! This repository is a comprehensive guide and resource for those interested in creating their own operating system from the ground up.
 
